@@ -1,16 +1,52 @@
+/*
+ * This file is part of the OpenMV project.
+ *
+ * Copyright (c) 2013-2021 Ibrahim Abdelkader <iabdalkader@openmv.io>
+ * Copyright (c) 2013-2021 Kwabena W. Agyeman <kwagyeman@openmv.io>
+ *
+ * This work is licensed under the MIT license, see the file LICENSE for details.
+ *
+ * main function.
+ */
 #include STM32_HAL_H
+#include <stdbool.h>
+#include "sdram.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_uvc.h"
 #include "usbd_uvc_if.h"
+#include "cambus.h"
 #include "sensor.h"
 #include "framebuffer.h"
 #include "omv_boardconfig.h"
+
+#if defined(I2C1)
+I2C_HandleTypeDef I2CHandle1;
+#endif
+#if defined(I2C2)
+I2C_HandleTypeDef I2CHandle2;
+#endif
+#if defined(I2C3)
+I2C_HandleTypeDef I2CHandle3;
+#endif
+#if defined(I2C4)
+I2C_HandleTypeDef I2CHandle4;
+#endif
 
 extern sensor_t sensor;
 USBD_HandleTypeDef hUsbDeviceFS;
 extern volatile uint8_t g_uvc_stream_status;
 extern struct uvc_streaming_control videoCommitControl;
+
+void mp_hal_delay_ms(uint32_t Delay)
+{
+    HAL_Delay(Delay);
+}
+
+mp_uint_t mp_hal_ticks_ms(void)
+{
+    return HAL_GetTick();
+}
 
 void __attribute__((noreturn)) __fatal_error()
 {
@@ -50,6 +86,20 @@ int printf(const char *fmt, ...)
     return 0;
 }
 
+NORETURN void nlr_jump(void *val)
+{
+    __fatal_error();
+}
+
+void *mp_obj_new_exception_msg(const void *exc_type, const char *msg)
+{
+    return NULL;
+}
+
+const void *mp_type_MemoryError = NULL;
+
+const void *mp_sys_stdout_print = NULL;
+
 static uint8_t frame_index = 0;
 static uint8_t format_index = 0;
 
@@ -57,7 +107,7 @@ static uint8_t uvc_header[2] = { 2, 0 };
 static uint8_t packet[VIDEO_PACKET_SIZE];
 uint32_t packet_size = VIDEO_PACKET_SIZE-2;
 
-bool streaming_cb(image_t *image)
+bool process_frame(image_t *image)
 {
     uint32_t xfer_size = 0;
     uint32_t xfer_bytes = 0;
@@ -111,9 +161,6 @@ int main()
 {
     HAL_Init();
 
-    // Re-enable IRQs (disabled by bootloader)
-    __enable_irq();
-
     GPIO_InitTypeDef  GPIO_InitStructure;
     GPIO_InitStructure.Pull  = GPIO_PULLUP;
     GPIO_InitStructure.Speed = GPIO_SPEED_LOW;
@@ -123,14 +170,24 @@ int main()
     HAL_GPIO_Init(OMV_BOOTLDR_LED_PORT, &GPIO_InitStructure);
     HAL_GPIO_WritePin(OMV_BOOTLDR_LED_PORT, OMV_BOOTLDR_LED_PIN, GPIO_PIN_SET);
 
-    sensor_init0();
+    // Re-enable IRQs (disabled by bootloader)
+    __enable_irq();
+
+    #ifdef OMV_SDRAM_SIZE
+    if (!sdram_init()) {
+        __fatal_error();
+    }
+    #endif
+
     fb_alloc_init0();
+    framebuffer_init0();
+    sensor_init0();
 
     // Initialize the sensor
     if (sensor_init() != 0) {
         __fatal_error();
     }
-    
+
     sensor_reset();
 
     /* Init Device Library */
@@ -183,9 +240,10 @@ int main()
                 format_index = videoCommitControl.bFormatIndex;
             }
 
-            image_t image;
-            image.pixels = NULL;
-            sensor.snapshot(&sensor, &image, streaming_cb);
+            image_t image = {0};
+            do {
+                sensor.snapshot(&sensor, &image, 0);
+            } while (process_frame(&image));
         }
     }
 }

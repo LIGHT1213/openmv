@@ -1,9 +1,11 @@
-#! /usr/bin/env python
+#!/usr/bin/env python2
 # This file is part of the OpenMV project.
-# Copyright (c) 2017-2018
-# Ibrahim Abdelkader <iabdalkader@openmv.io> & Kwabena W. Agyeman <kwagyeman@openmv.io>
+#
+# Copyright (c) 2013-2021 Ibrahim Abdelkader <iabdalkader@openmv.io>
+# Copyright (c) 2013-2021 Kwabena W. Agyeman <kwagyeman@openmv.io>
+#
 # This work is licensed under the MIT license, see the file LICENSE for details.
-# 
+#
 # This script finds all object files and sorts them by text, bss or data.
 
 import os, sys
@@ -15,9 +17,14 @@ if __name__ == "__main__":
         print('objfind.py <sort key (text, bss or data)>')
         sys.exit(1)
     
+    if len(sys.argv) == 3:
+        cwd = sys.argv[2]
+    else:
+        cwd = '.'
+
     objfiles = []
     sortkey = sys.argv[1]
-    for root, dirs, files in os.walk("."):
+    for root, dirs, files in os.walk(cwd):
         for file in files:
             if file.endswith(".o"):
                  objfiles.append({'path':os.path.join(root, file)})

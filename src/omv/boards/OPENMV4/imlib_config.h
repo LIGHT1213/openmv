@@ -1,19 +1,27 @@
 /*
  * This file is part of the OpenMV project.
- * Copyright (c) 2013/2014 Ibrahim Abdelkader <i.abdalkader@gmail.com>
+ *
+ * Copyright (c) 2013-2021 Ibrahim Abdelkader <iabdalkader@openmv.io>
+ * Copyright (c) 2013-2021 Kwabena W. Agyeman <kwagyeman@openmv.io>
+ *
  * This work is licensed under the MIT license, see the file LICENSE for details.
  *
  * Image library configuration.
- *
  */
 #ifndef __IMLIB_CONFIG_H__
 #define __IMLIB_CONFIG_H__
+
+// Enable Image I/O
+#define IMLIB_ENABLE_IMAGE_IO
+
+// Enable Image File I/O
+#define IMLIB_ENABLE_IMAGE_FILE_IO
 
 // Enable LAB LUT
 #define IMLIB_ENABLE_LAB_LUT
 
 // Enable YUV LUT
-#define IMLIB_ENABLE_YUV_LUT
+//#define IMLIB_ENABLE_YUV_LUT
 
 // Enable mean pooling
 #define IMLIB_ENABLE_MEAN_POOLING
@@ -55,10 +63,7 @@
 #define IMLIB_ENABLE_BILATERAL
 
 // Enable cartoon()
-#define IMLIB_ENABLE_CARTOON
-
-// Enable remove_shadows()
-#define IMLIB_ENABLE_REMOVE_SHADOWS
+// #define IMLIB_ENABLE_CARTOON
 
 // Enable linpolar()
 #define IMLIB_ENABLE_LINPOLAR
@@ -66,25 +71,15 @@
 // Enable logpolar()
 #define IMLIB_ENABLE_LOGPOLAR
 
-// Enable chrominvar()
-#define IMLIB_ENABLE_CHROMINVAR
-
-// Enable illuminvar()
-#define IMLIB_ENABLE_ILLUMINVAR
-
-// Enable invariant table
-//#define IMLIB_ENABLE_INVARIANT_TABLE
+// Enable lens_corr()
+#define IMLIB_ENABLE_LENS_CORR
 
 // Enable rotation_corr()
 #define IMLIB_ENABLE_ROTATION_CORR
 
 // Enable phasecorrelate()
+#if defined(IMLIB_ENABLE_ROTATION_CORR)
 #define IMLIB_ENABLE_FIND_DISPLACEMENT
-
-// rotation_corr() is required by phasecorrelate()
-#if defined(IMLIB_ENABLE_FIND_DISPLACEMENT)\
-    && !defined(IMLIB_ENABLE_ROTATION_CORR)
-    #define IMLIB_ENABLE_ROTATION_CORR
 #endif
 
 // Enable get_similarity()
@@ -95,12 +90,6 @@
 
 // Enable find_line_segments()
 #define IMLIB_ENABLE_FIND_LINE_SEGMENTS
-
-// find_lines() is required by the old find_line_segments()
-#if defined(IMLIB_ENABLE_FIND_LINE_SEGMENTS)\
-    && !defined(IMLIB_ENABLE_FIND_LINES)
-    #define IMLIB_ENABLE_FIND_LINES
-#endif
 
 // Enable find_circles()
 #define IMLIB_ENABLE_FIND_CIRCLES
@@ -114,20 +103,30 @@
 // Enable find_apriltags() (64 KB)
 #define IMLIB_ENABLE_APRILTAGS
 
+// Enable fine find_apriltags() - (8-way connectivity versus 4-way connectivity)
+// #define IMLIB_ENABLE_FINE_APRILTAGS
+
+// Enable high res find_apriltags() - uses more RAM
+// #define IMLIB_ENABLE_HIGH_RES_APRILTAGS
+
 // Enable find_datamatrices() (26 KB)
 #define IMLIB_ENABLE_DATAMATRICES
 
 // Enable find_barcodes() (42 KB)
 #define IMLIB_ENABLE_BARCODES
 
-// Enable LENET (200+ KB).
-#define IMLIB_ENABLE_LENET
-
 // Enable CMSIS NN
-#define IMLIB_ENABLE_CNN
+// #if !defined(CUBEAI)
+// #define IMLIB_ENABLE_CNN
+// #endif
+
+// Enable Tensor Flow
+#if !defined(CUBEAI)
+#define IMLIB_ENABLE_TF
+#endif
 
 // Enable FAST (20+ KBs).
-#define IMLIB_ENABLE_FAST
+// #define IMLIB_ENABLE_FAST
 
 // Enable find_template()
 #define IMLIB_FIND_TEMPLATE
@@ -138,14 +137,16 @@
 // Enable find_keypoints()
 #define IMLIB_ENABLE_FIND_KEYPOINTS
 
-#if defined(IMLIB_ENABLE_FIND_LBP) || defined(IMLIB_ENABLE_FIND_KEYPOINTS)
-    #define IMLIB_ENABLE_DESCRIPTOR
-#endif
+// Enable load, save and match descriptor
+#define IMLIB_ENABLE_DESCRIPTOR
 
 // Enable find_hog()
 #define IMLIB_ENABLE_HOG
 
 // Enable selective_search()
-#define IMLIB_ENABLE_SELECTIVE_SEARCH
+// #define IMLIB_ENABLE_SELECTIVE_SEARCH
+
+// Enable STM32 DMA2D
+#define IMLIB_ENABLE_DMA2D
 
 #endif //__IMLIB_CONFIG_H__

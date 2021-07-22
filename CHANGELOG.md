@@ -1,4 +1,364 @@
 # Change Log
+## [4.0.2](https://github.com/openmv/openmv/releases/tag/v4.0.2) (2021-06-19)
+* Update TinyUSB to 0.10.1
+* Update pico-sdk to 1.2.0
+* Update MT9M114 driver.
+* Update Python scripts and libraries.
+* Add support for PixArt image sensor PAJ6100.
+* Add soft frame rate control to STM32 sensor driver.
+* Add new RP2040 port (Pico and Nano RP2040 boards supported).
+* Improve snapshot error messages.
+* Use MDMA to offload line buffer processing on STM32.
+* Fix Portenta-H7 audio bug.
+* Fix Ethernet link status.
+* Fix servo bug (not re-initializing on reset).
+
+## [4.0.1](https://github.com/openmv/openmv/releases/tag/v4.0.1) (2021-05-27)
+* Fix framebuffer corruption bug.
+* Fix servo timer.
+* Fix Eth low power mode bug.
+* Fix bootloader memset bug in newer gcc.
+* Fix mutex locking disabling IRQs.
+* Fix LWIP DHCP issue.
+* Update GC2145 driver.
+* Portenta: Enable SPI2.
+* Portenta: ULPI low power mode fix.
+* Portenta: Add PWM example with pinout.
+
+## [4.0.0](https://github.com/openmv/openmv/releases/tag/v4.0.0) (2021-05-13)
+* Update to MicroPython 1.15
+* Update to GNU ARM Toolchain 10-2020-q4-major.
+* Update all examples and unit-tests.
+* Improved and more stable WiFi debugging.
+* Add support for double, triple and n buffers capture.
+* Add support for using MDMA to offload line processing.
+* Add support for non-blocking image capture in sensor.snapshot.
+* Add support for copying JPEG images.
+* Add support for CYW Bluetooth for Portenta board.
+* Add initial MT9M114 driver.
+* Add debayering support to draw_image.
+* Fix HM01B0 transposed image bug.
+* Fix HM01B0 vflip/hmirror settings.
+* Fix NANO33 PID/VID.
+* Fix UART clock source for H7 MCUs.
+* Fix FLIR Lepton init reliably on Pure Thermal board.
+
+## [3.9.4](https://github.com/openmv/openmv/releases/tag/v3.9.4) (2021-03-26)
+* Add new buzzer Python module.
+* Add Ethernet low-power mode functions.
+* Add ULPI/Phy low-power mode functions.
+* Add initial OV767x sensor driver.
+* Optimized DMA buffers allocation to reduce bus contention.
+* Update MT9V034 manual AEC/AEG, manual gain/exposure and implement readout control.
+* Update HM01B0 driver, add support for motion detection, manual exposure and 320x320 mode.
+* Optimize software and hardware JPEG compression.
+* Improve FLIR module DMA bandwidth usage.
+* Optimize TV driver DMA bandwidth usage.
+* Fix Portenta low-power modes (stop and standby modes).
+* Fix OV5640 autofocus logic.
+* Fix linker script stack alignment for boards with SRAM stack.
+* Fix Portenta MPU regions to default state on reset.
+* Update RTSP server and examples to work with FFPLAY.
+* Update Portenta examples, add Himax low-power/motion detection example.
+
+## [3.9.3](https://github.com/openmv/openmv/releases/tag/v3.9.3) (2021-02-13)
+* Fix issues with Portenta WiFi.
+* Fix JPEG Binary image compression.
+* Fix rgb_channel_extraction grayscale selection for TV.
+* Fix FLIR FFC with a timeout.
+* Add initial support for Bormio.
+* Add Portenta WiFi examples.
+* Update LWIP.
+
+## [3.9.2](https://github.com/openmv/openmv/releases/tag/v3.9.2) (2021-02-01)
+* Fix ImageIO RGB565 bug.
+* Update Portenta LoRa library.
+* Fix IDMA/DMA2 bus contention bug on newer cams.
+* Fix external Lepton driver on F4 and F7.
+* Fix issues with F7 LCD triple buffering.
+* Improve STOP mode power consumption.
+* Improve TV driver resolution, add scaling, and triple buffering
+
+## [3.9.1](https://github.com/openmv/openmv/releases/tag/v3.9.1) (2021-01-22)
+* Update ulab to 2.1.3
+* Add Portenta LoRa library.
+* Add set_framerate to sensor module.
+* Enable exFAT for Portenta.
+* Update HM01B0 sensor driver.
+* Improve low-power modes on QSPI boards.
+* Reduced firmware image size.
+* Faster firmware build.
+
+## [3.9.0](https://github.com/openmv/openmv/releases/tag/v3.9.0) (2021-01-13)
+* Fix H7 timer bug in new HAL. 
+* Fix pyb_spi bug from upstream.
+* Fix OV5640 PCLK calculation.
+* Add support for the MicroPython nRF port.
+* Add initial NANO 33 BLE sense board support.
+* Add support for OV5640 auto-focus feature.
+* Add support for the new MLX90641 FIR sensor.
+* Add the MLX90621 official driver library.
+* Update tinyusb submodule to 0.7.0
+* Update cambus code to work with all supported FIR sensors.
+* Update cambus to support auto-detection of FIR sensors.
+* Update read_ir() to support hmirror, vflip and tranpose.
+* Update draw_ir() to use the new drawing pipeline with bicubic scaling.
+* Add ImageIO type to support memory stream I/O.
+* Update example scripts.
+* Add new examples for NANO 33.
+
+## [3.8.0](https://github.com/openmv/openmv/releases/tag/v3.8.0) (2020-12-06)
+* Update F4 HAL V1.7.1 -> V1.7.10
+* Update F7 HAL V1.2.2 -> V1.2.8
+* Update H7 HAL V1.6.0 -> V1.9.0
+* Update MicroPython 1.12 -> 1.13
+* Fix FIR I2C bus arbitration lost error.
+* Fix disabled OSCs/PLLs after exiting stop mode.
+* Fix DRAM retention in stop mode.
+* Fix stop mode voltage scaling for H7 Rev V.
+* Fix OV5640 and OV2640 clocks on H7 Rev Y.
+* Fix imlib build dependencies.
+* Fix fatal_error possibly using uninitialized storage.
+* Fix build errors if no DCMI GPIOs are defined.
+* Fix RGB565 inversion from camera.
+* Fix copy_to_fb to update JPEG fb after loading/creating images.
+* Fix PLL1 frequency for revision Y devices.
+* Fix unit-test failing on disabled functions.
+* Add FT5X06 touch screen lcd support.
+* Add HDMI CEC and HDMI support via the TFP410.
+* Add DMA2D support to some drawing functions.
+* Add power supply per-board configuration.
+* Add new image scaling pipeline.
+* Add ExtInt wake-up example.
+* Add support for using images to draw on FB.
+* Add CAN function to calculate bit timing from baudrate.
+* Update SDRAM test and make it cache-aware.
+* Update cpufreq module to support H7 REV X/Y and V frequencies.
+* Update from using frozen dir to per-board frozen manifest file.
+* Portenta: Fix and update PLL settings.
+* Portenta: Fix SDRAM timing config.
+* Portenta: Add Audio module with PCM support.
+* Portenta: Add Tensorflow micro speech module.
+* Portenta: Fix Ethernet/SDRAM bug.
+* Portenta: Add Portenta audio example scripts.
+* Portenta: Add Ethernet support and example scripts.
+
+## [3.7.0](https://github.com/openmv/openmv/releases/tag/v3.7.0) (2020-11-23)
+* Fix imlib build dependencies.
+* Fix fatal_error bug using uninitialized storage.
+* Fix build errors if no DCMI GPIOs are defined.
+* Fix RGB565 inversion from camera
+* Fix copy_to_fb to update JPEG fb after loading/creating images.
+* Fix PLL1 frequency for revision Y devices.
+* Add FT5X06 touch screen lcd support.
+* Add HDMI support via the TFP410
+* Use DMA2D to accelerate some drawing functions.
+* Update SDRAM test and make it cache-aware.
+* Add power supply per board configuration.
+* Add new image scaling pipeline
+* Add ExtInt wake-up example.
+* Support flushing images without initializing the sensor.
+* PORTENTA: Fix and update PLL settings.
+* PORTENTA: Fix SDRAM timing config.
+* PORTENTA: Add Audio module with PCM support.
+* PORTENTA: Add Tensorflow micro speech module.
+* PORTENTA: Fix Ethernet/SDRAM bug.
+* PORTENTA: Add Portenta audio example scripts.
+
+## [3.6.9](https://github.com/openmv/openmv/releases/tag/v3.6.9) (2020-10-12)
+* Enable LWIP and CYW4343.
+* Fix major issues with Portenta build.
+* Fix issues with QSPI and MPU mode.
+
+## [3.6.8](https://github.com/openmv/openmv/releases/tag/v3.6.8) (2020-9-28)
+* Add support for boards without image sensors.
+* Enable TensorFlow CMSIS-NN kernels.
+* Add UART and CAN support to RPC library.
+* Update example scripts.
+* Allow build-time configuration of clock sources, PLLs, sensors and modules.
+* Improve Arduino's Portenta board support.
+* Fix test jig bug.
+* Fix extra PLLs initialization in system config.
+* Fix FLIR alt configuration.
+* Fix sensor reset with the regulator turned off.
+* Fix uninitialized sensor timer struct field bug.
+* Fix JPEG image loading.
+* Fix broken debug build.
+* Fix FSYNC pin definition.
+* Fix DAC timed write bug on H7.
+* Fix WINC1500 open security bug.
+
+## [3.6.7](https://github.com/openmv/openmv/releases/tag/v3.6.7) (2020-7-21)
+* Fix framebuffer bug introduced in 3.6.5.
+
+## [3.6.6](https://github.com/openmv/openmv/releases/tag/v3.6.6) (2020-7-18)
+* Fix broken sensor_init0.
+* Add face recognition scripts.
+
+## [3.6.5](https://github.com/openmv/openmv/releases/tag/v3.6.5) (2020-7-17)
+* Fix minor FPS counter bug.
+* Update ulab to the latest.
+* Improved Portenta board support.
+* Fix ST CUBE-AI build.
+* Update tensorflow library to the latest.
+* Remove legacy CMSIS-NN code and examples.
+* Code refactoring and cleanup.
+
+## [3.6.4](https://github.com/openmv/openmv/releases/tag/v3.6.4) (2020-6-03)
+* Fix OV5640 imaging modes.
+* Fix floating point scaling in TensorFlow code.
+* Fix software JPEG encode of 1-bpp images.
+* Fix grayscale SW JPEG compression for YCbCr colorspace.
+* Fix flipped bayer images on OV7725 and OV7690.
+* Improved OV5640 FPS.
+* Improved sensor driver for higher FPS.
+* Harden sensor driver code.
+* Support debayering for get_pixel in bayer mode.
+* Update cascade converter to work with Python3.
+* Add rtsp support.
+
+## [3.6.3](https://github.com/openmv/openmv/releases/tag/v3.6.3) (2020-5-16)
+* Update TF to support uint8/int8/float32
+* Re-enable TF on OMV3/F7.
+* Improved imlib lens correction.
+* Fix rotation correction bug.
+* Update MLX90640 driver.
+* Improved FIR sensors support.
+* Support higher framerate on OV5640.
+* Improved drawing and blending functions.
+* Fix Bayer to YCBCR edge bug.
+
+## [3.6.2](https://github.com/openmv/openmv/releases/tag/v3.6.2) (2020-5-04)
+* Optimized Bayer to RGB565/YCBCR.
+* Optimized datamatrix ops and binary ops.
+* Improved WiFi throughput.
+* Add raw data RD/WR access to the image object.
+* Support draw image with custom palettes.
+* Add new OpenMV RPC Interface Library.
+* Fix H7 SPI DMA bugs.
+* Fix H7 SPI and I2C DMA Deinit.
+* Fix and update draw_image.
+* Updated tensorflow library to support int8
+* Fix H7 FDCAN bugs.
+* Fix bug in filters corrupting memory if y size less than k_size.
+
+## [3.6.1](https://github.com/openmv/openmv/releases/tag/v3.6.1) (2020-3-30)
+* Add support for OV7690 and HM01B0 sensors.
+* Add support for Portenta-H747.
+* Optimized image filters, lens correction and find_circles.
+* Add BGR argument to lcd init (fixes an issue with some LCDs).
+* Move clock configuration to board config file.
+* Fix hardfault on disable D cache. 
+* Fix Tensorflow stack overflow issue.
+* Fix load_to_fb bug.
+
+## [3.6](https://github.com/openmv/openmv/releases/tag/v3.6) (2020-2-7)
+* Fix H7 DAC timed write bug.
+* Fix self-tests bug.
+* Fix H7 I2C timings.
+* Fix TIM4 reserved bug.
+* Update to MicroPython v1.12
+* Support for 32MBs QSPI flash.
+* Bootloader QSPI flash support.
+* OMV4+ UVC support.
+* OV5640 sensor driver.
+* Optimized LSD, AprilTags, QRCode and JPEG.
+* Updated py_tf tensorflow docs.
+
+## [3.5.2](https://github.com/openmv/openmv/releases/tag/v3.5.2) (2019-12-17)
+* Fix H7 timer bug.
+* Update timer test scripts.
+* Enable DBGMCU in sleep modes.
+* Fix MQTT module to work with SSL sockets.
+
+## [3.5.1](https://github.com/openmv/openmv/releases/tag/v3.5.1) (2019-12-06)
+* Update ulab submodule.
+* Update Tensorflow library.
+* Fix sepconv3 bug.
+* Fix debug build errors.
+
+## [3.5.0](https://github.com/openmv/openmv/releases/tag/v3.5.0) (2019-11-04)
+* Update CMSIS to v5.4.0
+* Update H7 HAL to v1.5
+* Update MicroPython to 1.11.
+* Update WINC1500 firmware to v19.6.1.
+* Update WINC1500 host driver to v19.3.0.
+* Add STM32Cube.AI support.
+* Add TensorFlow Lite for microcontrollers.
+* Add built-in person detector with TF Lite.
+* Add ulab and openrv libraries.
+* Add support for 32-bit SDRAM @100MHz.
+* Add Arduino UART example.
+* Add new ADC example for internal channels.
+* Add new HTTPs client examples.
+* Fix fb_alloc bug introduced in v3.5.0-beta.2.
+* Fix ADC driver to work with new H7 HAL.
+* Fix BMP bug when reading 24-bit images.
+* Fix Lepton Hardfault when setting VGA/RGB565.
+* Fix SPI WFI bug on F7.
+* Fix cpufreq H7 frequencies.
+* Fix Makefile order dependency issues.
+* Fix VSCALE0 low-power mode.
+* Enable mod USSL with MBEDTLS.
+* Enable QSPI internal storage for OpenMV-4R2.
+* Enable VSCALE0 for rev V devices.
+* All the modules in scripts/libraries are now frozen.
+
+## [3.5.0-beta.3](https://github.com/openmv/openmv/releases/tag/v3.5.0-beta.3) (2019-10-25)
+* Update WINC1500 to firmware v19.6.1 and host driver v19.3.0.
+* Add STM32Cube.AI support.
+* Fix fb_alloc bug introduced in v3.5.0-beta.2.
+* Enable QSPI internal storage for OpenMV-4R2.
+* Switch to VSCALE1 before entering low-power mode.
+* Add support for TensorFlow Lite for Microcontrollers.
+* Enable mod USSL with MBEDTLS.
+* Update HTTP/S client examples.
+* Fix Makefile order dependency issue causing non-parallel builds to fail.
+
+## [3.5.0-beta.2](https://github.com/openmv/openmv/releases/tag/v3.5.0-beta.2) (2019-10-12)
+* Update to CMSIS v5.4.0
+* Update to H7 HAL v1.5
+* Update ADC driver to work with new H7 HAL.
+* Enable VSCALE0 for rev V devices.
+* Enable PLL3 for ADC and SPI123v and use PLL2 for FMC (outputs 200MHz).
+* Add support for 32-bit SDRAM @100MHz.
+* Fix BMP bug when reading 24-bit images.
+* Update ADC examples
+* Add new ADC example for internal channels.
+* Add Arduino UART example.
+* Update Arduino SPI example to use callbacks.
+* Add PWM channel 3 and servo 3 to pwm and servo examples.
+* Fix Lepton Hardfault when setting VGA/RGB565.
+
+## [3.5.0-beta.1](https://github.com/openmv/openmv/releases/tag/v3.5.0-beta.1) (2019-09-30)
+* Update to MicroPython 1.11.
+* Update examples.
+* Fix SPI WFI bug on F7.
+
+## [3.4.3](https://github.com/openmv/openmv/releases/tag/v3.4.3) (2019-09-27)
+* Fix delay when JPEG encoding overflows (affects H7).
+
+## [3.4.2](https://github.com/openmv/openmv/releases/tag/v3.4.2) (2019-09-16)
+* Fix H7 RTC bugs.
+* Fix binary ops bug.
+* Fix H7 deepsleep mode.
+* Fix JPEG mode bugs.
+* Fix H7 DMA bug.
+* Fix LBP ROI bug.
+* Update OV2640 driver.
+* Add support for OV5640.
+* Add new SDRAM board support.
+* Add new libraries and examples.
+* Add FB alloc statistics, enable with (FB_ALLOC_STATS=1).
+* Add support for H7 FDCAN.
+* Enable btree module.
+* AprilTag: support flipped/mirrored images.
+* AprilTag: support high resolution images.
+* WINC1500: Add netinfo function.
+* WINC1500: Support static IPs.
+* WINC1500: Fix timeout issues with WINC wrapper.
+* WINC1500: Fix accept() hardfault on unbound sockets.
+
 ## [3.4.1](https://github.com/openmv/openmv/releases/tag/v3.4.1) (2019-05-02)
 * This patch release fixes an issue with Lepton clock.
 
